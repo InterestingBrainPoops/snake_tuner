@@ -2,7 +2,7 @@
 name = "snake_tuner"
 version = "0.1.0"
 edition = "2021"
-authors = "BrokenKeyboard"
+authors = ["BrokenKeyboard"]
 license = "MIT OR Apache-2.0"
 description = "A simple tuner crate for battlesnakes"
 repository = "https://github.com/InterestingBrainPoops/snake_tuner"
