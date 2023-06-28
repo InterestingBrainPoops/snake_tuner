@@ -1,0 +1,9 @@
+[package]
+name = "database"
+version = "0.1.0"
+authors = ["BrokenKeyboard"]
+edition = "2021"
+publish = false
+
+[dependencies]
+snake_tuner = {path = "../.."}
