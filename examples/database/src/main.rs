@@ -47,7 +47,7 @@ fn main() {
     };
 
     // Initialize a dataloader on the database above with a batch size of 1 and shuffle on.
-    let mut dataloader = DataLoader::new(&my_db, 1, true);
+    let mut dataloader = DataLoader::new(my_db, 1, true);
 
     // Sample the dataloader to get an entry.
     println!("{:?}", dataloader.sample());

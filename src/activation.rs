@@ -1,5 +1,10 @@
-/// # Activation function
-/// Activation function trait  
+//! Activation functions and utilities  
+//!   
+//! This module provides:  
+//! *   [`ActivationFunction`] A trait to make your own activation functions
+//! *   [`functions`] A module which contains a collection of activation functions to use
+
+/// Wrapper trait around Activation functions which includes the derivative and normal calculation.
 pub trait ActivationFunction {
     /// Evaluate the function.  
     fn evaluate(value: f64) -> f64;
@@ -7,7 +12,6 @@ pub trait ActivationFunction {
     /// Evaluate the derivative of the function.
     fn derivative(value: f64) -> f64;
 }
-
 
 /// A collection of activation functions for use in your code
 pub mod functions {

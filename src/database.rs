@@ -1,16 +1,20 @@
-/// # Entry trait
-/// Implement this on your data base entries.
+//! Database wrapper  
+//!  
+//! This moduled provides:  
+//! *   [`Entry`] A wrapper around database entries
+//! *   [`Database`] A wrapper around a database
+
+/// Wrapper trait around your entry, providing a way for the tuner to get the inputs and data label from the entry.
 pub trait Entry<const N: usize> {
-    /// Get the input array from the entry
+    /// Returns the input array from the entry.
     fn get_inputs(&self) -> [f64; N];
-    /// Get the expected output from the entry
+    /// Returns the expected output from the entry.
     fn get_expected_output(&self) -> f64;
 }
-/// # Database trait  
-/// This is wrapped around a database, which the data loader will pull from.  
+/// Wrapper trait around your database, providing functions to get the size and an element from the database.
 pub trait Database<const N: usize, E: Entry<N>> {
-    /// Returns the number of database entries, which is basically the size of the database.  
+    /// Returns the number of database entries.  
     fn size(&self) -> usize;
-    /// Get an entry from the database given the index. This should be deterministic.  
+    /// Returns the entry at index `idx` in the database.  
     fn get(&self, idx: usize) -> E;
 }
