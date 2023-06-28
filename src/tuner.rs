@@ -1,7 +1,6 @@
 use std::f64::consts::E;
 
-use crate::{database::Database, dataloader::DataLoader};
-use rand::prelude::*;
+use crate::dataloader::DataLoader;
 
 /// The Tuner
 /// This can be passed around, since it holds all the information it needs to be consistent.
@@ -45,7 +44,7 @@ impl<const N: usize> Tuner<N> {
             .iter_mut()
             .enumerate()
             .for_each(|(idx, item)| *item += gradient_accumulator[idx]);
-        return weights;
+        weights
     }
 
     fn dot(x1: [f64; N], x2: [f64; N]) -> f64 {

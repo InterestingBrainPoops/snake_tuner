@@ -38,6 +38,6 @@ impl<const N: usize> DataLoader<N> {
         }
         let out = self.queue[self.idx].clone();
         self.idx += 1;
-        return out;
+        out
     }
 }
