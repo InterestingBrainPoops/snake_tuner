@@ -2,24 +2,24 @@ use std::f64::consts::E;
 
 use crate::dataloader::DataLoader;
 
-/// The Tuner
-/// This can be passed around, since it holds all the information it needs to be consistent.
+/// The Tuner  
+/// This can be passed around, since it holds all the information it needs to be consistent.  
 pub struct Tuner<const N: usize> {
     data_loader: DataLoader<N>,
     learning_rate: f64,
 }
 
 impl<const N: usize> Tuner<N> {
-    /// Make a new tuner from an input database and learning rate.
-    /// Reccomended learning rate is 0.005
+    /// Make a new tuner from an input database and learning rate.  
+    /// Reccomended learning rate is 0.005  
     pub fn new(data_loader: &DataLoader<N>, learning_rate: f64) -> Self {
         Tuner {
             data_loader: data_loader.clone(),
             learning_rate,
         }
     }
-    /// Run a training step on the weights given.
-    /// It will grab a sample from the dataloader and process it.
+    /// Run a training step on the weights given.  
+    /// It will grab a sample from the dataloader and process it.  
     pub fn step(&mut self, mut weights: [f64; N]) -> [f64; N] {
         let entries = self.data_loader.sample();
         let sample_size = entries.len();

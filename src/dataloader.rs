@@ -2,9 +2,9 @@ use rand::{seq::SliceRandom, thread_rng};
 
 use crate::database::{Database, Entry};
 
-/// # Dataloader
-/// A data loader for more convinient access to batches and shuffling.
-/// Abstracts away the database queries, and only does them during the new function
+/// # Dataloader  
+/// A data loader for more convinient access to batches and shuffling.  
+/// Abstracts away the database queries, and only does them during the new function  
 #[derive(Clone)]
 pub struct DataLoader<const N: usize> {
     queue: Vec<Vec<Entry<N>>>,
@@ -12,10 +12,10 @@ pub struct DataLoader<const N: usize> {
 }
 
 impl<const N: usize> DataLoader<N> {
-    /// Makes a new data loader, given input options, and the database to query from.
-    /// `database` is not stored, only used to initalize the internal buffer
-    /// `batch_size` is the batch size of the data, and cannot be modified once created.
-    /// `shuffle` sets whether or not to shuffle the dataset. (heavily reccomended)
+    /// Makes a new data loader, given input options, and the database to query from.  
+    /// `database` is not stored, only used to initalize the internal buffer  
+    /// `batch_size` is the batch size of the data, and cannot be modified once created.  
+    /// `shuffle` sets whether or not to shuffle the dataset. (heavily reccomended)  
     pub fn new<D: Database<N>>(database: &D, batch_size: usize, shuffle: bool) -> DataLoader<N> {
         let mut rng = thread_rng();
         let mut numbers = (0..database.size()).collect::<Vec<usize>>();
@@ -31,7 +31,7 @@ impl<const N: usize> DataLoader<N> {
             idx: 0,
         }
     }
-
+    /// Sample a batch of entries from the database.
     pub fn sample(&mut self) -> Vec<Entry<N>> {
         if self.idx == self.queue.len() {
             self.idx = 0;
