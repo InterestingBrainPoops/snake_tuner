@@ -6,4 +6,5 @@ edition = "2021"
 publish = false
 
 [dependencies]
+nalgebra = "0.32.2"
 snake_tuner = {path = "../.."}

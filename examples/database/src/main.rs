@@ -1,3 +1,4 @@
+use nalgebra::SVector;
 use snake_tuner::{
     database::{Database, Entry},
     dataloader::DataLoader,
@@ -17,8 +18,8 @@ struct MyEntry {
 }
 
 impl Entry<3> for MyEntry {
-    fn get_inputs(&self) -> [f64; 3] {
-        self.input
+    fn get_inputs(&self) -> SVector<f64, 3> {
+        SVector::from(self.input)
     }
 
     fn get_expected_output(&self) -> f64 {

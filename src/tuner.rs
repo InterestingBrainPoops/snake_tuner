@@ -1,6 +1,8 @@
 //! Main tuner struct  
 //!   
 //! This module provides the primary [`Tuner`] struct.  
+use nalgebra::{vector, ArrayStorage, Const, SVector, Vector};
+
 use crate::{activation::ActivationFunction, database::Entry, dataloader::DataLoader};
 
 /// Holds the dataloader and other information for the tuner to function.  
@@ -19,38 +21,24 @@ impl<const N: usize, E: Entry<N> + Clone> Tuner<N, E> {
         }
     }
 
-    fn dot(x1: [f64; N], x2: [f64; N]) -> f64 {
-        x1.iter()
-            .enumerate()
-            .map(|(idx, item)| item * x2[idx])
-            .sum()
-    }
-
     /// Returns the weights with after running one iteration of batch Stochastic Gradient Descent (SGD)  
-    pub fn step<A: ActivationFunction>(&mut self, mut weights: [f64; N]) -> [f64; N] {
+    pub fn step<A: ActivationFunction>(&mut self, mut weights: SVector<f64, N>) -> SVector<f64, N> {
         let entries = self.data_loader.sample();
         let sample_size = entries.len();
-        let mut gradient_accumulator = [0.0; N];
-
+        let mut gradient_accumulator = SVector::from([0.0; N]);
         for entry in entries {
-            let guess = A::evaluate(Self::dot(weights, entry.get_inputs()));
+            let guess = A::evaluate(weights.dot(&entry.get_inputs()));
             let error = entry.get_expected_output() - guess;
-            for (idx, item) in gradient_accumulator.iter_mut().enumerate() {
-                // Delta rule in accordance with https://en.wikipedia.org/wiki/Delta_rule
-                *item += A::derivative(weights[idx] * entry.get_inputs()[idx])
-                    * entry.get_inputs()[idx]
-                    * self.learning_rate
-                    * error;
-            }
+
+            // Delta rule in accordance with https://en.wikipedia.org/wiki/Delta_rule
+            gradient_accumulator = gradient_accumulator.component_mul(&entry.get_inputs())
+                * A::derivative(weights.dot(&entry.get_inputs()))
+                * self.learning_rate
+                * error;
         }
 
-        gradient_accumulator
-            .iter_mut()
-            .for_each(|x| *x /= sample_size as f64);
-        weights
-            .iter_mut()
-            .enumerate()
-            .for_each(|(idx, item)| *item += gradient_accumulator[idx]);
+        gradient_accumulator = gradient_accumulator.map(|x| x / sample_size as f64);
+        weights += gradient_accumulator;
         weights
     }
 }
