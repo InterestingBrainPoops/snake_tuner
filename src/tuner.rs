@@ -31,10 +31,11 @@ impl<const N: usize, E: Entry<N> + Clone> Tuner<N, E> {
             let error = entry.get_expected_output() - guess;
 
             // Delta rule in accordance with https://en.wikipedia.org/wiki/Delta_rule
-            gradient_accumulator = gradient_accumulator.component_mul(&entry.get_inputs())
-                * A::derivative(weights.dot(&entry.get_inputs()))
-                * self.learning_rate
-                * error;
+            gradient_accumulator = gradient_accumulator
+                + (&entry.get_inputs())
+                    * A::derivative(weights.dot(&entry.get_inputs()))
+                    * self.learning_rate
+                    * error;
         }
 
         gradient_accumulator = gradient_accumulator.map(|x| x / sample_size as f64);
