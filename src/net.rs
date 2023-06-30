@@ -23,15 +23,23 @@ impl Layer {
         input: DVector<f64>,
         learning_rate: f64,
     ) -> DVector<f64> {
+        // println!(
+        //     "input : {}, output : {}, error_out : {}",
+        //     input, output, out_errors
+        // );
         let gradients = output.map(|x| A::derivative(x)).component_mul(&out_errors) * learning_rate;
+        // println!("gradients {}", gradients);
 
         let input_t = input.transpose();
-        let weights_io_deltas = gradients.clone().mul(input_t);
+        // println!("input_T {}", input_t);
 
+        let weights_io_deltas = gradients.clone().mul(input_t);
+        // println!("weights deltas {}", weights_io_deltas);
+
+        let wio_t = self.weights_io.transpose();
         self.weights_io += weights_io_deltas;
 
         self.bias_o += gradients;
-        let wio_t = self.weights_io.transpose();
         wio_t.mul(out_errors)
     }
 
@@ -73,6 +81,7 @@ impl Net {
         }
         let mut error = expected - layer_intermmediates.last().unwrap().clone();
         for (idx, layer) in self.layers.iter_mut().enumerate().rev() {
+            // println!("{:?}", error);
             error = layer.backprop::<A>(
                 error,
                 layer_intermmediates[idx + 1].clone(),

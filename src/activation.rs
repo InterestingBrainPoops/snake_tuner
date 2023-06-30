@@ -27,7 +27,7 @@ pub mod functions {
         }
 
         fn derivative(value: f64) -> f64 {
-            Self::evaluate(value) * (1.0 - Self::evaluate(value))
+            value * (1.0 - value)
         }
     }
 
