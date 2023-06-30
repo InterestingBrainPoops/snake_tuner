@@ -1,7 +1,6 @@
 //! Main tuner struct  
 //!   
 //! This module provides the primary [`Tuner`] struct.  
-use nalgebra::SVector;
 
 use crate::{activation::ActivationFunction, database::Entry, dataloader::DataLoader, net::Net};
 

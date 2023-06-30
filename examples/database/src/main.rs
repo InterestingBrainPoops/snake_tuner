@@ -1,4 +1,4 @@
-use nalgebra::{DVector, SVector};
+use nalgebra::DVector;
 use snake_tuner::{
     database::{Database, Entry},
     dataloader::DataLoader,

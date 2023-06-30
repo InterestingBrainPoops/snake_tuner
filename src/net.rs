@@ -1,6 +1,6 @@
 use std::ops::Mul;
 
-use nalgebra::{DMatrix, DVector, SMatrix, SVector};
+use nalgebra::{DMatrix, DVector};
 
 use crate::activation::ActivationFunction;
 
@@ -12,8 +12,8 @@ pub struct Layer {
 impl Layer {
     pub fn new(inputs: usize, outputs: usize) -> Layer {
         Layer {
-            weights_io: DMatrix::zeros(outputs, inputs),
-            bias_o: DVector::zeros(outputs),
+            weights_io: DMatrix::new_random(outputs, inputs),
+            bias_o: DVector::new_random(outputs),
         }
     }
     pub fn backprop<A: ActivationFunction>(
