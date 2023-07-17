@@ -18,6 +18,7 @@ pub mod evaluations {
 
     use super::Eval;
     /// Linear evaluation
+    #[derive(Clone)]
     pub struct Linear<const N: usize, A: ActivationFunction + Clone> {
         weights: SVector<f64, N>,
         activate_fn: A,
