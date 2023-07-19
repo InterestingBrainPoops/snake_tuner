@@ -32,6 +32,13 @@ pub mod evaluations {
                 activate_fn,
             }
         }
+
+        pub fn from_weights(weights: SVector<f64, N>, activate_fn: A) -> Linear<N, A> {
+            Linear {
+                weights,
+                activate_fn,
+            }
+        }
     }
     impl<const N: usize, A: ActivationFunction + Clone> Eval<N, N, A> for Linear<N, A> {
         fn forward(&self, coefficients: SVector<f64, N>) -> f64 {
