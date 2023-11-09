@@ -1,6 +1,6 @@
 [package]
 name = "snake_tuner"
-version = "0.5.2"
+version = "0.5.3"
 edition = "2021"
 authors = ["BrokenKeyboard"]
 license = "MIT OR Apache-2.0"
@@ -10,11 +10,9 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nalgebra = {version = "0.32.2", features = ["rand"]}
+nalgebra = { version = "0.32.2", features = ["rand"] }
 rand = "0.8.5"
 
 
 [workspace]
-members = [
-    "examples/*"
-]
+members = ["examples/*"]
